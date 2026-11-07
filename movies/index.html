@@ -545,6 +545,7 @@ if (!Q.tiebreak) Q.tiebreak = clone(DEFAULT_Q.tiebreak);
 let S = load(KEY_S) || freshState(3);
 let hist = [];
 let armed = null;            // two-click confirmations
+let shareMsg = "";           // "Link copied" on the podium's Share button
 let timer = { id: null, left: 0, total: 0, running: false };
 
 function persist(){ const s = clone(S); s.editor = null; s.voicePanel = null; s.voiceExport = null; save(KEY_S, s); }
@@ -1154,6 +1155,7 @@ function viewPodium(){
     ${rest.length ? `<div class="rest">${rest.map(t=>`<div><span>${t.rank}. ${esc(t.name)}</span><span class="num">${fmt(t.score)}</span></div>`).join("")}</div>` : ""}
     <div class="actions">
       <button class="btn" data-act="toboard">Back to the board</button>
+      ${/^https?:$/.test(location.protocol) ? `<button class="btn" data-act="share">${shareMsg || "Share this game"}</button>` : ""}
       <button class="btn ghost ${armed==="new"?"warn":""}" data-act="new">${armed==="new" ? "Click again to end this game" : "New game"}</button>
     </div></div>`;
 }
@@ -1422,6 +1424,15 @@ const actions = {
   tbpick(el){ const i = +el.dataset.i, o = S.tbOrder, k = o.indexOf(i); if (k >= 0) o.splice(k, 1); else o.push(i); persist(); render(); },
   tbdone(){ stopSpeech(); S.screen = "podium"; S.tb = null; persist(); render(); SFX.good(); announceWinners(); },
   toboard(){ stopSpeech(); S.screen = "board"; persist(); render(); },
+  share(){   // podium: the system share dialog, or copy the game's address where there is none
+    const url = location.origin + location.pathname, title = document.title.split(" · ")[0];
+    const d = document.querySelector('meta[name="description"]'), text = d ? d.content : "";
+    if (navigator.share){ navigator.share({ title, text, url }).catch(() => {}); return; }
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(() => {
+      shareMsg = "Link copied"; render();
+      setTimeout(() => { shareMsg = ""; if (S.screen === "podium") render(); }, 2000);
+    }, () => {});
+  },
   voice(){ S.voicePanel = true; armed = null; render(); },
   vdone(){ S.voicePanel = null; S.voiceExport = null; persistV(); render(); },
   vengine(el){ V.engine = el.dataset.e; persistV(); render(); actions.vtest(); },
@@ -1557,6 +1568,7 @@ window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude
 <a href="/movies/how-to-host-a-game-night/">Host guide</a>
 <a href="/movies/faq/">FAQ</a>
 <a href="/">All games</a>
+<span class="gn-share"><button type="button" class="nof-sb" data-gn-share data-url="https://gamenights.quest/movies/" data-title="Victoria’s Movie Night" data-text="A free movie quiz for the whole office: films of every era on a game-show board, a plot twist, a popcorn bucket and a Final Cut wager, with a narrator." data-img="https://gamenights.quest/movies/og-image.png" data-target="movies" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Share this game</button><button type="button" class="nof-sb" data-gn-save data-url="https://gamenights.quest/movies/" data-title="Victoria’s Movie Night" data-text="A free movie quiz for the whole office: films of every era on a game-show board, a plot twist, a popcorn bucket and a Final Cut wager, with a narrator." data-img="https://gamenights.quest/movies/og-image.png" data-target="movies" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>Bookmark</button></span>
 </nav>
 <style>
 .nof-links{display:flex;flex-wrap:wrap;gap:6px 22px;justify-content:center;max-width:1400px;margin:0 auto;padding:8px 16px 36px;
@@ -1564,12 +1576,120 @@ window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude
 .nof-links a{color:#c4aeb0;text-decoration:none}
 .nof-links a:hover,.nof-links a:focus-visible{color:#ffe4a3;text-decoration:underline}
 .nof-links[hidden]{display:none!important}
+.nof-links .gn-share{gap:6px 22px}
+.nof-sb{display:inline-flex;align-items:center;gap:6px;background:none;border:0;padding:0;color:#c4aeb0;font:inherit;cursor:pointer}
+.nof-sb:hover,.nof-sb:focus-visible{color:#ffe4a3;text-decoration:underline}
 </style>
 <script>
 (function(){
   var nav = document.querySelector('.nof-links'), app = document.getElementById('app');
   var sync = function(){ nav.hidden = !(app.querySelector('.setup') || app.querySelector('.nof-static')); };
   new MutationObserver(sync).observe(app, { childList: true }); sync();
+})();
+</script>
+<style>
+.gn-share{position:relative;display:inline-flex;flex-wrap:wrap;gap:10px}
+.gn-share button{cursor:pointer;font-size:inherit}
+.gn-share button svg{flex:none}
+.gn-pop{position:absolute;z-index:20;top:calc(100% + 8px);left:0;width:max-content;max-width:min(320px,calc(100vw - 32px));
+  background:var(--dusk,#1b1626);color:var(--bone,#f2e9d8);border:1px solid var(--line,#3a3248);border-radius:14px;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);padding:10px;font-family:var(--f-ui,"Alegreya Sans",system-ui,sans-serif);
+  font-size:1rem;line-height:1.4;text-align:left}
+.gn-pop a,.gn-pop button{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:0;border-radius:8px;background:none;
+  color:inherit;font:inherit;font-weight:700;text-decoration:none;cursor:pointer;text-align:left}
+.gn-pop a:hover,.gn-pop button:hover,.gn-pop a:focus-visible,.gn-pop button:focus-visible{background:rgba(255,255,255,.08);color:var(--ember,#ffd58a)}
+.gn-pop p{margin:4px 10px 10px;font-weight:400}
+.gn-pop kbd{display:inline-block;min-width:1.6em;padding:1px 7px;border:1px solid var(--line,#3a3248);border-bottom-width:3px;border-radius:6px;
+  font:700 .95em var(--f-ui,system-ui,sans-serif);color:var(--ember,#ffd58a);text-align:center}
+.gn-pop .gn-note{font-size:.88rem;color:var(--ash,#ab9fbd)}
+@media print{.gn-share,.gn-pop{display:none!important}}
+</style>
+<script>
+(function(){
+  var page = location.pathname.replace(/^\/|\/$/g, '').replace(/\//g, '-') || 'home';
+  var ga = function(name, params){ if (typeof gtag === 'function') gtag('event', name, params); };
+  var touch = window.matchMedia && matchMedia('(pointer: coarse)').matches;
+  var ua = navigator.userAgent, ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  var android = /Android/.test(ua), mac = /Mac/.test(navigator.platform || ua) && !ios;
+  var open = null;
+  var esc = function(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var close = function(){ if (!open) return; open.pop.remove(); open.btn.setAttribute('aria-expanded', 'false'); var b = open.btn; open = null; return b; };
+  var info = function(b){ return { url: b.getAttribute('data-url'), title: b.getAttribute('data-title'), text: b.getAttribute('data-text'),
+                                  img: b.getAttribute('data-img'), target: b.getAttribute('data-target') }; };
+  var show = function(btn, html){
+    close();
+    var pop = document.createElement('div'); pop.className = 'gn-pop'; pop.setAttribute('role', 'dialog'); pop.innerHTML = html;
+    btn.parentNode.appendChild(pop);
+    pop.style.left = (btn.offsetLeft) + 'px';
+    var r = pop.getBoundingClientRect();
+    if (r.right > innerWidth - 12) pop.style.left = Math.max(btn.offsetLeft - (r.right - innerWidth + 12), -btn.parentNode.getBoundingClientRect().left + 12) + 'px';
+    var br = btn.getBoundingClientRect();
+    if (r.bottom > innerHeight - 8 && br.top - 8 > r.height){ pop.style.top = 'auto'; pop.style.bottom = 'calc(100% + 8px)'; }   // no room below: open upwards
+    btn.setAttribute('aria-expanded', 'true'); open = { btn: btn, pop: pop };
+    var first = pop.querySelector('a,button'); if (first) first.focus();
+    return pop;
+  };
+  var system = function(d, from){
+    return navigator.share({ title: d.title, text: d.text, url: d.url }).then(function(){ ga('share_click', { method: 'system', from_page: page, target: d.target }); },
+      function(err){ if (!err || err.name !== 'AbortError') { if (from) menu(from, d, true); } });
+  };
+  var copy = function(text, el){
+    var done = function(){ el.textContent = 'Link copied'; setTimeout(close, 1200); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function(){ prompt('Copy this link:', text); });
+    else prompt('Copy this link:', text);
+  };
+  var menu = function(btn, d, noSystem){
+    var u = encodeURIComponent(d.url), t = encodeURIComponent(d.title), x = encodeURIComponent(d.text);
+    var items = [
+      ['copy', 'Copy link', null],
+      ['email', 'Email', 'mailto:?subject=' + t + '&body=' + x + '%0A%0A' + u],
+      ['whatsapp', 'WhatsApp', 'https://wa.me/?text=' + t + '%20' + u],
+      ['linkedin', 'LinkedIn', 'https://www.linkedin.com/sharing/share-offsite/?url=' + u],
+      ['facebook', 'Facebook', 'https://www.facebook.com/sharer/sharer.php?u=' + u],
+      ['x', 'X (Twitter)', 'https://x.com/intent/tweet?text=' + t + '&url=' + u],
+      ['pinterest', 'Pinterest', 'https://www.pinterest.com/pin/create/button/?url=' + u + '&media=' + encodeURIComponent(d.img) + '&description=' + t]
+    ];
+    if (navigator.share && !noSystem) items.push(['system', 'More options…', null]);
+    var html = items.map(function(it){
+      return it[2] ? '<a href="' + esc(it[2]) + '" data-m="' + it[0] + '"' + (it[0] === 'email' ? '' : ' target="_blank" rel="noopener"') + '>' + it[1] + '</a>'
+                   : '<button type="button" data-m="' + it[0] + '">' + it[1] + '</button>';
+    }).join('');
+    var pop = show(btn, html);
+    pop.addEventListener('click', function(ev){
+      var el = ev.target.closest('[data-m]'); if (!el) return;
+      var m = el.getAttribute('data-m');
+      if (m === 'copy'){ ev.preventDefault(); copy(d.url, el); ga('share_click', { method: 'copy', from_page: page, target: d.target }); return; }
+      if (m === 'system'){ ev.preventDefault(); close(); system(d, null); return; }
+      ga('share_click', { method: m, from_page: page, target: d.target });
+      setTimeout(close, 50);
+    });
+  };
+  var bookmark = function(btn, d){
+    var device = ios ? 'ios' : android ? 'android' : touch ? 'touch' : mac ? 'mac' : 'computer';
+    var how = ios ? '<p>In Safari, tap the <b>Share</b> button, then <b>Add Bookmark</b> or <b>Add to Home Screen</b>.</p>'
+      : android ? '<p>Tap the browser menu <b>⋮</b>, then the <b>☆</b> star to bookmark, or <b>Add to Home screen</b>.</p>'
+      : touch ? '<p>Open the browser menu and choose <b>Bookmark</b> or <b>Add to Home Screen</b>.</p>'
+      : '<p>Press ' + (mac ? '<kbd>⌘</kbd> + <kbd>D</kbd>' : '<kbd>Ctrl</kbd> + <kbd>D</kbd>') + ' to bookmark this page.</p>';
+    var send = (touch && navigator.share) ? '<button type="button" data-m="send">Send the link to myself</button>'
+      : '<a data-m="send" href="mailto:?subject=' + encodeURIComponent(d.title) + '&body=' + encodeURIComponent(d.text + '\n\n' + d.url) + '">Email the link to myself</a>';
+    var pop = show(btn, how + send + '<p class="gn-note">Handy for opening the game later on the computer connected to the big screen.</p>');
+    ga('bookmark_click', { device: device, from_page: page });
+    pop.addEventListener('click', function(ev){
+      var el = ev.target.closest('[data-m="send"]'); if (!el) return;
+      if (el.tagName === 'BUTTON'){ ev.preventDefault(); close(); system(d, null); }
+      else setTimeout(close, 50);
+    });
+  };
+  document.addEventListener('click', function(ev){
+    var b = ev.target.closest && ev.target.closest('[data-gn-share],[data-gn-save]');
+    if (!b){ if (open && !open.pop.contains(ev.target)) close(); return; }
+    if (open && open.btn === b){ close(); return; }
+    var d = info(b);
+    if (b.hasAttribute('data-gn-share')){
+      if (touch && navigator.share){ close(); system(d, b); } else menu(b, d);
+    } else bookmark(b, d);
+  });
+  document.addEventListener('keydown', function(ev){ if (ev.key === 'Escape' && open){ var b = close(); if (b) b.focus(); } });
 })();
 </script>
 <script>
@@ -1606,6 +1726,7 @@ window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude
     if (act === 'edit') gtag('event', 'open_question_editor');
     if (act === 'voice') gtag('event', 'open_voice_settings');
     if (act === 'edone') gtag('event', 'questions_edited');
+    if (act === 'share') gtag('event', 'share_click', { method: navigator.share ? 'system' : 'copy', from_page: 'podium', target: 'movies' });
   }, true);
   check();
 })();
