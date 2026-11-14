@@ -154,6 +154,41 @@ a:hover{color:var(--bone)}
 .tile.orig .when,.tile.orig .links a{color:var(--o-ash)}
 .tile.orig .links a:hover{color:var(--o-ember)}
 @media (max-width:420px){.tile,.tile:nth-child(-n+2){padding:16px}.tile .disc,.tile:nth-child(-n+2) .disc{width:72px;height:72px}.tile .disc svg,.tile:nth-child(-n+2) .disc svg{width:50px;height:50px}}
+
+.trailer{position:relative;height:190vh;background:var(--tr-night);color:var(--tr-bone)}
+.trailer__sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
+ background:radial-gradient(70% 60% at 78% 62%,rgba(var(--tr-glow),.20),transparent 70%),radial-gradient(60% 50% at 10% 10%,rgba(var(--tr-glow2),.12),transparent 70%),var(--tr-night)}
+.trailer__fx{position:absolute;inset:0;width:100%;height:100%;display:block}
+.trailer__art{position:absolute;right:7%;bottom:16%;width:min(34vw,440px);aspect-ratio:1;filter:drop-shadow(0 0 60px rgba(var(--tr-glow),.55));
+ transform-origin:50% 80%;will-change:transform}
+.trailer__art svg{width:100%;height:100%}
+.trailer__fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,transparent 62%,rgba(12,12,14,.55) 84%,#0c0c0e 100%)}
+.trailer__hero{position:absolute;inset:0;padding:0 clamp(16px,4vw,56px) clamp(28px,6vh,64px);display:flex;flex-direction:column;justify-content:flex-end;gap:10px}
+.trailer__eyebrow{margin:0;font-family:var(--f-ui);font-weight:800;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--tr-candle)}
+.trailer__title{margin:0;font-family:var(--tr-font);font-weight:var(--tr-w);line-height:.9;letter-spacing:-.01em;white-space:nowrap;
+ display:inline-flex;align-self:flex-start;width:max-content;font-size:14vw;color:var(--tr-ember);text-shadow:0 0 50px rgba(var(--tr-glow),.45)}
+.trailer__title .ch{display:inline-block;transform-origin:50% 100%;white-space:pre}
+.trailer__cta{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin-top:6px;font-family:var(--f-ui)}
+.trailer__play{display:inline-flex;align-items:center;gap:8px;background:var(--tr-candle);color:#0c0c0e;text-decoration:none;font-weight:800;font-size:.9rem;
+ letter-spacing:.06em;text-transform:uppercase;border-radius:12px;padding:14px 20px}
+.trailer__play:hover{filter:brightness(1.08);color:#0c0c0e}
+.trailer__all{display:inline-flex;align-items:center;gap:6px;color:var(--tr-bone);font-weight:700;font-size:.9rem;text-decoration:none;opacity:.85}
+.trailer__all:hover{opacity:1;color:var(--tr-ember)}
+.trailer__orbit{position:absolute;inset:0;opacity:0;pointer-events:none;font-family:var(--f-ui)}
+.trailer__item{position:absolute;margin:0;max-width:30ch;font-size:clamp(.95rem,1.4vw,1.15rem);line-height:1.45;font-weight:600;color:var(--tr-bone)}
+.trailer__item span{display:block;margin-bottom:6px;font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--tr-ash)}
+.trailer__item--tl{top:clamp(24px,7vh,72px);left:clamp(16px,4vw,56px)}
+.trailer__item--tr{top:clamp(24px,7vh,72px);right:clamp(16px,4vw,56px);text-align:right}
+.trailer__item--bl{bottom:clamp(120px,22vh,220px);left:clamp(16px,4vw,56px);list-style:none;padding:0;display:flex;flex-direction:column;gap:6px;
+ font-family:var(--tr-font);font-weight:var(--tr-w);font-size:clamp(1.4rem,3.2vw,2.6rem);line-height:1.1;color:var(--tr-ember);max-width:none}
+.trailer__item--br{bottom:clamp(120px,22vh,220px);right:clamp(16px,4vw,56px);text-align:right}
+@media (max-width:760px){
+ .trailer{height:170vh}
+ .trailer__art{right:-6%;top:12%;bottom:auto;width:62vw}
+ .trailer__item--tr,.trailer__item--br{display:none}
+ .trailer__item--bl{bottom:auto;top:clamp(110px,20vh,180px)}
+}
+@media (prefers-reduced-motion:reduce){.trailer{height:auto}.trailer__sticky{position:relative}.trailer__orbit{opacity:1}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://gamenights.quest/#website", "url": "https://gamenights.quest/", "name": "Victoria’s Game Nights", "inLanguage": "en"}, {"@type": "ItemList", "name": "Games", "itemListElement": [{"@type": "ListItem", "position": 1, "url": "https://gamenights.quest/christmas/", "name": "Victoria’s Merry Quizmas"}, {"@type": "ListItem", "position": 2, "url": "https://gamenights.quest/movies/", "name": "Victoria’s Movie Night"}, {"@type": "ListItem", "position": 3, "url": "https://gamenights.quest/halloween/", "name": "Victoria’s Night of Frights"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much do the games cost?", "acceptedAnswer": {"@type": "Answer", "text": "The games on this site can be played for free right now: open a game, name your teams and play, with no account and no ads. Some games, question packs or custom office editions may become paid later, and anything paid will be clearly marked."}}, {"@type": "Question", "name": "What do we need?", "acceptedAnswer": {"@type": "Answer", "text": "A computer with Chrome or Edge, a big screen or projector and speakers. Players only need their voices, and paper and pens for the final round."}}, {"@type": "Question", "name": "Can remote coworkers play?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Share the game in Teams, Zoom or Google Meet with computer sound on, and mix remote players into teams with people in the room. Each game has a page on how to set it up."}}, {"@type": "Question", "name": "How many people can play?", "acceptedAnswer": {"@type": "Answer", "text": "2 to 4 teams, ideally 6 to 20 people. With a bigger group, make bigger teams."}}, {"@type": "Question", "name": "Can I change the questions?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Every game has a question editor, so you can add questions about your own office."}}]}]}</script>
 </head>
@@ -162,6 +197,25 @@ a:hover{color:var(--bone)}
   <a class="brand" href="/"><i class="dot"></i>Victoria’s <span>Game Nights</span></a>
   <nav class="site-nav" aria-label="Main"><a href="/#how">How it works</a><a href="/#faq">FAQ</a><a class="cta" href="mailto:&#104;&#101;&#108;&#108;&#111;&#64;&#103;&#97;&#109;&#101;&#110;&#105;&#103;&#104;&#116;&#115;&#46;&#113;&#117;&#101;&#115;&#116;?subject=Victoria%E2%80%99s%20Game%20Nights" data-contact>Write to Victoria</a></nav>
 </div></header>
+<section class="trailer" style="--tr-night:#0d1714;--tr-dusk:#15231e;--tr-bone:#f6f1e6;--tr-ash:#a8c0b6;--tr-ember:#ffe6a6;--tr-candle:#e6b34c;--tr-glow:230,179,76;--tr-glow2:201,72,79;--tr-font:'Mountains of Christmas',Georgia,'Times New Roman',serif;--tr-w:700" aria-labelledby="tr-title">
+<div class="trailer__sticky">
+  <canvas class="trailer__fx" data-fx='{"colors": ["#ffffff", "#eaf4ff", "#ffe6a6"], "dir": 1, "size": [1.2, 3.4], "density": 1.1, "speed": [18, 55], "sway": 22}' aria-hidden="true"></canvas>
+  <div class="trailer__art" aria-hidden="true"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 9 L46 28 H40 L50 41 H43 L54 54 H10 L21 41 H14 L24 28 H18 Z" fill="#5fae6e"/><path d="M32 9 L39 18.5 L32 16 L25 18.5 Z" fill="#f6f1e6" opacity=".18"/><rect x="28" y="54" width="8" height="7" rx="1.5" fill="#8a5a3c"/><path d="M32 2 l2.2 4.6 5 .6 -3.7 3.4 1 5 -4.5-2.5 -4.5 2.5 1-5 -3.7-3.4 5-.6z" fill="#e6b34c"/><circle cx="27" cy="31" r="2.6" fill="#e2554f"/><circle cx="38" cy="38" r="2.6" fill="#e6b34c"/><circle cx="24" cy="46" r="2.6" fill="#e6b34c"/><circle cx="35" cy="49" r="2.6" fill="#e2554f"/><circle cx="43" cy="47" r="2.2" fill="#f6f1e6"/><circle cx="31" cy="23" r="2.2" fill="#f6f1e6"/></svg></div>
+  <div class="trailer__fade" aria-hidden="true"></div>
+  <div class="trailer__hero">
+    <p class="trailer__eyebrow">New · Christmas</p>
+    <h2 class="trailer__title" id="tr-title" data-text="Merry Quizmas">Merry Quizmas</h2>
+    <div class="trailer__cta"><a class="trailer__play" href="/christmas/" data-play>Play Merry Quizmas <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></a>
+      <a class="trailer__all" href="#games">All games <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 4v16m0 0l-6-6m6 6l6-6"/></svg></a></div>
+  </div>
+  <div class="trailer__orbit" aria-hidden="true">
+    <p class="trailer__item trailer__item--tl"><span>Victoria’s Game Nights</span>Merry Quizmas, a quiz for the whole office</p>
+    <p class="trailer__item trailer__item--tr">A narrator reads every question.<br>Teams answer out loud.</p>
+    <ul class="trailer__item trailer__item--bl"><li>Naughty or Nice</li><li>Krampus’s Bargain</li><li>Christmas Eve wager</li></ul>
+    <p class="trailer__item trailer__item--br">2–4 teams · about an hour<br>free, no sign-up</p>
+  </div>
+</div>
+</section>
 <main id="main" class="wrap">
 <section class="hero">
 <h1>Game nights<br><span>for teams</span></h1>
@@ -316,6 +370,69 @@ a:hover{color:var(--bone)}
     } else bookmark(b, d);
   });
   document.addEventListener('keydown', function(ev){ if (ev.key === 'Escape' && open){ var b = close(); if (b) b.focus(); } });
+})();
+</script>
+<script>
+(function(){
+  var st = document.querySelector('.trailer'); if (!st) return;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var clamp = function(v,a,b){ return Math.min(b===undefined?1:b, Math.max(a===undefined?0:a, v)); };
+  var range = function(v,a,b){ return clamp((v-a)/(b-a)); };
+  var smooth = function(p){ return p*p*(3-2*p); };
+  var hero = st.querySelector('.trailer__hero'), title = st.querySelector('.trailer__title');
+  var orbit = st.querySelector('.trailer__orbit'), items = [].slice.call(orbit.querySelectorAll('.trailer__item'));
+  var art = st.querySelector('.trailer__art'), eyebrow = st.querySelector('.trailer__eyebrow'), cta = st.querySelector('.trailer__cta');
+  // title letters
+  var chars = [], text = title.getAttribute('data-text'); title.textContent = '';
+  for (var i = 0; i < text.length; i++){ var s = document.createElement('span'); s.className = 'ch'; s.textContent = text[i]; title.appendChild(s); chars.push(s); }
+  title.setAttribute('aria-label', text);
+  function fit(){
+    var cs = getComputedStyle(hero), avail = hero.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    if (avail <= 0) return; title.style.fontSize = '100px';
+    var w = title.getBoundingClientRect().width; if (w > 0) title.style.fontSize = Math.min(100 * avail / w, innerHeight * 0.34) + 'px';
+  }
+  var progress = 0;
+  function read(){ var travel = st.offsetHeight - innerHeight; progress = travel > 0 ? clamp(-st.getBoundingClientRect().top / travel) : 0; }
+  function render(){
+    if (reduce) return;
+    var n = chars.length, STAG = 0.32 / Math.max(n, 1), SPAN = 0.16;
+    for (var i = 0; i < n; i++){ var k = smooth(range(progress, 0.04 + i*STAG, 0.04 + i*STAG + SPAN));
+      chars[i].style.transform = 'translateY(' + (k*130) + 'px) scaleY(' + (1 - k*0.22) + ')'; chars[i].style.opacity = String(1 - k); }
+    var f = String(1 - range(progress, 0.05, 0.22)); eyebrow.style.opacity = f; cta.style.opacity = f; cta.style.pointerEvents = +f < .2 ? 'none' : '';
+    art.style.transform = 'translateY(' + (-progress*6) + 'vh) scale(' + (1 + progress*0.18) + ')';
+    var start = 0.36, out = range(progress, 0.9, 1);
+    orbit.style.opacity = String(range(progress, start, start + 0.14) * (1 - out));
+    items.forEach(function(it, j){ var k = smooth(range(progress, start + j*0.05, start + 0.22 + j*0.05));
+      it.style.transform = 'translateY(' + ((1-k)*24) + 'px)'; it.style.opacity = String(k); });
+  }
+  // weather
+  var cv = st.querySelector('.trailer__fx'), ctx = cv.getContext('2d'), fx = JSON.parse(cv.getAttribute('data-fx')), parts = [], W = 0, H = 0, dpr = 1;
+  function rnd(a,b){ return a + Math.random()*(b-a); }
+  function spawn(p, anywhere){ p.x = rnd(0, W); p.y = anywhere ? rnd(0, H) : (fx.dir > 0 ? -10 : H + 10); p.r = rnd(fx.size[0], fx.size[1]);
+    p.v = rnd(fx.speed[0], fx.speed[1]); p.ph = rnd(0, 6.28); p.c = fx.colors[(Math.random()*fx.colors.length)|0]; p.a = rnd(.35, .95); p.rot = rnd(0, 6.28); return p; }
+  function size(){ dpr = Math.min(devicePixelRatio || 1, 2); W = cv.clientWidth; H = cv.clientHeight; cv.width = W*dpr; cv.height = H*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0); var want = Math.round(W*H/10000*fx.density); while (parts.length < want) parts.push(spawn({}, true)); parts.length = want; }
+  var visible = true, last = 0;
+  function draw(t){
+    var dt = Math.min(.05, (t - last)/1000 || 0); last = t; ctx.clearRect(0,0,W,H);
+    if (fx.beam){ var gr = ctx.createLinearGradient(W*.85, 0, W*.35, H); gr.addColorStop(0,'rgba(255,228,163,.16)'); gr.addColorStop(1,'rgba(255,228,163,0)');
+      ctx.fillStyle = gr; ctx.beginPath(); ctx.moveTo(W*.9, 0); ctx.lineTo(W*.2, H); ctx.lineTo(W*.6, H); ctx.lineTo(W*.98, 0); ctx.fill(); }
+    for (var i = 0; i < parts.length; i++){ var p = parts[i];
+      p.y += fx.dir * p.v * dt; p.ph += dt; var x = p.x + Math.sin(p.ph*0.8) * fx.sway * 0.3;
+      if (p.y > H + 12 || p.y < -12) spawn(p, false);
+      ctx.globalAlpha = p.a; ctx.fillStyle = p.c;
+      if (fx.confetti){ p.rot += dt*2; ctx.save(); ctx.translate(x, p.y); ctx.rotate(p.rot); ctx.fillRect(-p.r, -p.r*.45, p.r*2, p.r*.9); ctx.restore(); }
+      else { ctx.beginPath(); ctx.arc(x, p.y, p.r, 0, 6.283); ctx.fill(); } }
+    ctx.globalAlpha = 1;
+  }
+  function frame(t){ render(); if (visible && !reduce) draw(t); requestAnimationFrame(frame); }
+  new IntersectionObserver(function(es){ visible = es[0].isIntersecting; }).observe(st);
+  addEventListener('scroll', read, { passive: true });
+  addEventListener('resize', function(){ fit(); size(); read(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  fit(); size(); read();
+  if (reduce) draw(0);   // one still frame of the weather
+  requestAnimationFrame(frame);
 })();
 </script>
 <script>
