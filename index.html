@@ -67,7 +67,8 @@ a:hover{color:var(--bone)}
 .prose p{color:#c9c9d1;font-weight:500}
 .eyebrow{font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:.75rem;color:var(--ash);margin:0}
 .bar{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}
-.bar h2{margin:0;font-size:.8rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.bar h2,.bar h1{margin:0;font-size:.8rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.trailer.banner + main #games{padding-top:28px}
 .bar span{font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ash)}
 /* 2-3-3 on a computer: the first two tiles (the game in season and the next one) are wide, then rows of three */
 .tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
@@ -160,6 +161,11 @@ body:has(.trailer) .site-head{position:absolute;top:0;left:0;right:0;z-index:5;b
 body:has(.trailer) .site-nav a:not(.cta){background:rgba(12,12,14,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .trailer__sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;--tr-pad:max(clamp(16px,4vw,56px),calc((100% - 1200px) / 2 + 20px));
  background:radial-gradient(70% 60% at 78% 62%,rgba(var(--tr-glow),.20),transparent 70%),radial-gradient(60% 50% at 10% 10%,rgba(var(--tr-glow2),.12),transparent 70%),var(--tr-night)}
+.trailer.banner{height:auto}
+.trailer.banner .trailer__sticky{position:relative;height:clamp(360px,54vh,600px)}
+.trailer.banner .trailer__orbit{display:none}
+.trailer.banner .trailer__hero{padding-bottom:clamp(22px,4vh,40px)}
+.trailer.banner .trailer__art{top:clamp(64px,10vh,96px);width:min(24vw,30vh,320px)}
 .trailer__fx{position:absolute;inset:0;width:100%;height:100%;display:block}
 .trailer__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .trailer.has-video .trailer__art,.trailer.has-video .trailer__fx{display:none}
@@ -202,9 +208,9 @@ body:has(.trailer) .site-nav a:not(.cta){background:rgba(12,12,14,.6);-webkit-ba
   <a class="brand" href="/"><i class="dot"></i>Victoria’s <span>Game Nights</span></a>
   <nav class="site-nav" aria-label="Main"><a href="/#how">How it works</a><a href="/#faq">FAQ</a><a class="cta" href="mailto:&#104;&#101;&#108;&#108;&#111;&#64;&#103;&#97;&#109;&#101;&#110;&#105;&#103;&#104;&#116;&#115;&#46;&#113;&#117;&#101;&#115;&#116;?subject=Victoria%E2%80%99s%20Game%20Nights" data-contact>Write to Victoria</a></nav>
 </div></header>
-<section class="trailer has-video" style="--tr-night:#0d1714;--tr-dusk:#15231e;--tr-bone:#f6f1e6;--tr-ash:#a8c0b6;--tr-ember:#ffe6a6;--tr-candle:#e6b34c;--tr-glow:230,179,76;--tr-glow2:201,72,79;--tr-font:'Mountains of Christmas',Georgia,'Times New Roman',serif;--tr-w:700" aria-labelledby="tr-title">
+<section class="trailer has-video banner" style="--tr-night:#0d1714;--tr-dusk:#15231e;--tr-bone:#f6f1e6;--tr-ash:#a8c0b6;--tr-ember:#ffe6a6;--tr-candle:#e6b34c;--tr-glow:230,179,76;--tr-glow2:201,72,79;--tr-font:'Mountains of Christmas',Georgia,'Times New Roman',serif;--tr-w:700" aria-labelledby="tr-title">
 <div class="trailer__sticky">
-  <video class="trailer__video" muted playsinline preload="auto" poster="/assets/trailer/christmas-poster.jpg" data-src="/assets/trailer/christmas.mp4" data-src-m="/assets/trailer/christmas-m.mp4" aria-hidden="true"></video>
+  <video class="trailer__video" muted playsinline preload="auto" poster="/assets/trailer/christmas-poster.jpg" data-src="/assets/trailer/christmas.mp4" data-src-m="/assets/trailer/christmas-m.mp4" data-src-loop="/assets/trailer/christmas-loop.mp4" aria-hidden="true"></video>
   <canvas class="trailer__fx" data-fx='{"colors": ["#ffffff", "#eaf4ff", "#ffe6a6"], "dir": 1, "size": [1.2, 3.4], "density": 1.1, "speed": [18, 55], "sway": 22}' aria-hidden="true"></canvas>
   <div class="trailer__art" aria-hidden="true"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 9 L46 28 H40 L50 41 H43 L54 54 H10 L21 41 H14 L24 28 H18 Z" fill="#5fae6e"/><path d="M32 9 L39 18.5 L32 16 L25 18.5 Z" fill="#f6f1e6" opacity=".18"/><rect x="28" y="54" width="8" height="7" rx="1.5" fill="#8a5a3c"/><path d="M32 2 l2.2 4.6 5 .6 -3.7 3.4 1 5 -4.5-2.5 -4.5 2.5 1-5 -3.7-3.4 5-.6z" fill="#e6b34c"/><circle cx="27" cy="31" r="2.6" fill="#e2554f"/><circle cx="38" cy="38" r="2.6" fill="#e6b34c"/><circle cx="24" cy="46" r="2.6" fill="#e6b34c"/><circle cx="35" cy="49" r="2.6" fill="#e2554f"/><circle cx="43" cy="47" r="2.2" fill="#f6f1e6"/><circle cx="31" cy="23" r="2.2" fill="#f6f1e6"/></svg></div>
   <div class="trailer__fade" aria-hidden="true"></div>
@@ -222,13 +228,10 @@ body:has(.trailer) .site-nav a:not(.cta){background:rgba(12,12,14,.6);-webkit-ba
 </div>
 </section>
 <main id="main" class="wrap">
-<section class="hero">
-<h1>Game nights<br><span>for teams</span></h1>
-<p>Quiz games for office parties and team events, for the holidays and any day of the year: one laptop, one big screen, a narrator who reads every question, and teams in the room and on the call. No sign-up, nothing to install.</p>
-</section>
+
 
 <section id="games" aria-labelledby="games-h">
-<div class="bar"><h2 id="games-h">All quiz games</h2><span>3 to play · 5 coming</span></div>
+<div class="bar"><h1 id="games-h">Quiz games for office parties and teams</h1><span>3 to play · 5 coming</span></div>
 <div class="tiles">
 <article class="tile ink-dark" style="--t-a:#94e4d8;--t-b:#3ebdaf;--t-acc:#25d5f2;--t-font:'Mountains of Christmas',Georgia,'Times New Roman',serif;--t-w:700;--t-fs:1.0"><div class="top"><span class="disc"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 9 L46 28 H40 L50 41 H43 L54 54 H10 L21 41 H14 L24 28 H18 Z" fill="#5fae6e"/><path d="M32 9 L39 18.5 L32 16 L25 18.5 Z" fill="#f6f1e6" opacity=".18"/><rect x="28" y="54" width="8" height="7" rx="1.5" fill="#8a5a3c"/><path d="M32 2 l2.2 4.6 5 .6 -3.7 3.4 1 5 -4.5-2.5 -4.5 2.5 1-5 -3.7-3.4 5-.6z" fill="#e6b34c"/><circle cx="27" cy="31" r="2.6" fill="#e2554f"/><circle cx="38" cy="38" r="2.6" fill="#e6b34c"/><circle cx="24" cy="46" r="2.6" fill="#e6b34c"/><circle cx="35" cy="49" r="2.6" fill="#e2554f"/><circle cx="43" cy="47" r="2.2" fill="#f6f1e6"/><circle cx="31" cy="23" r="2.2" fill="#f6f1e6"/></svg></span><span class="tag new">New · Christmas</span></div><h3>Merry Quizmas</h3><p class="blurb">Holiday trivia, Naughty or Nice, Krampus’s Bargain and a Christmas Eve wager, read by a jolly storyteller.</p><ul class="chips"><li>Naughty or Nice</li><li>Krampus’s Bargain</li><li>Christmas Eve wager</li></ul><div class="foot"><a class="play" href="/christmas/" data-play>Play Merry Quizmas <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></a><span class="links"><a href="/christmas/trivia-questions/">Christmas trivia questions</a><a href="/christmas/how-to-host-a-game-night/">Host guide</a><a href="/christmas/faq/">FAQ</a></span></div></article>
 <article class="tile ink-dark" style="--t-a:#f0d682;--t-b:#e7ac3d;--t-acc:#f45837;--t-font:'Limelight',Georgia,'Times New Roman',serif;--t-w:400;--t-fs:0.8"><div class="top"><span class="disc"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="26" width="48" height="30" rx="3" fill="#2b2326"/><rect x="8" y="26" width="48" height="7" fill="#fbf3ea"/><path d="M14 26 L19 33 M24 26 L29 33 M34 26 L39 33 M44 26 L49 33" stroke="#2b2326" stroke-width="4"/><g transform="rotate(-16 8 24)"><rect x="8" y="17" width="48" height="8" rx="1.5" fill="#fbf3ea"/><path d="M14 17 L19 25 M24 17 L29 25 M34 17 L39 25 M44 17 L49 25" stroke="#2b2326" stroke-width="4"/></g><circle cx="10" cy="24" r="2.4" fill="#f2c14e"/><path d="M14 40 H40 M14 47 H32" stroke="#c4aeb0" stroke-width="2.4" stroke-linecap="round" opacity=".7"/><path d="M53 4 l1.6 3.4 3.4 1.6 -3.4 1.6 -1.6 3.4 -1.6-3.4 -3.4-1.6 3.4-1.6z" fill="#f2c14e"/></svg></span><span class="tag">Any day</span></div><h3>Movie Night</h3><p class="blurb">Movie trivia for any day of the year: animated classics, superheroes, famous lines, directors, music and world cinema, with a plot twist, a popcorn bucket and a Final Cut wager.</p><ul class="chips"><li>Plot Twist</li><li>Popcorn Bucket</li><li>Final Cut wager</li></ul><div class="foot"><a class="play" href="/movies/" data-play>Play Movie Night <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></a><span class="links"><a href="/movies/trivia-questions/">Movie trivia questions</a><a href="/movies/how-to-host-a-game-night/">Host guide</a><a href="/movies/faq/">FAQ</a></span></div></article>
@@ -380,6 +383,7 @@ body:has(.trailer) .site-nav a:not(.cta){background:rgba(12,12,14,.6);-webkit-ba
 <script>
 (function(){
   var st = document.querySelector('.trailer'); if (!st) return;
+  var banner = st.classList.contains('banner');
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var clamp = function(v,a,b){ return Math.min(b===undefined?1:b, Math.max(a===undefined?0:a, v)); };
   var range = function(v,a,b){ return clamp((v-a)/(b-a)); };
@@ -394,10 +398,12 @@ body:has(.trailer) .site-nav a:not(.cta){background:rgba(12,12,14,.6);-webkit-ba
   function fit(){
     var cs = getComputedStyle(hero), avail = hero.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
     if (avail <= 0) return; title.style.fontSize = '100px';
-    var w = title.getBoundingClientRect().width; if (w > 0) title.style.fontSize = Math.min(100 * avail / w, innerHeight * 0.27) + 'px';
+    var cap = banner ? st.querySelector('.trailer__sticky').clientHeight * 0.36 : innerHeight * 0.27;
+    var w = title.getBoundingClientRect().width; if (w > 0) title.style.fontSize = Math.min(100 * avail / w, cap) + 'px';
   }
   var progress = 0;
-  function read(){ var travel = st.offsetHeight - innerHeight; progress = travel > 0 ? clamp(-st.getBoundingClientRect().top / travel) : 0; }
+  function read(){ if (banner){ progress = clamp(-st.getBoundingClientRect().top / st.offsetHeight) * 0.55; return; }
+    var travel = st.offsetHeight - innerHeight; progress = travel > 0 ? clamp(-st.getBoundingClientRect().top / travel) : 0; }
   function render(){
     if (reduce) return;
     var n = chars.length, STAG = 0.32 / Math.max(n, 1), SPAN = 0.16;
@@ -412,14 +418,14 @@ body:has(.trailer) .site-nav a:not(.cta){background:rgba(12,12,14,.6);-webkit-ba
   }
   // video: scrubbed by the scroll on computers, a quiet loop on phones and touch screens (seeking there is unreliable)
   var video = st.querySelector('.trailer__video');
-  var touch = matchMedia('(max-width: 860px), (hover: none)').matches, scrub = !!video && !touch && !reduce;
+  var touch = matchMedia('(max-width: 860px), (hover: none)').matches, scrub = !!video && !touch && !reduce && !banner;
   var target = 0, smoothT = 0, seeking = false;
   if (video){
     video.addEventListener('seeked', function(){ seeking = false; });
     video.addEventListener('error', function(){ seeking = false; });
     if (reduce){ video.preload = 'none'; video.removeAttribute('data-src'); }
     else if (scrub){ video.src = video.getAttribute('data-src'); }
-    else { video.src = video.getAttribute('data-src-m'); video.loop = true; video.autoplay = true; video.play().catch(function(){}); }
+    else { video.src = video.getAttribute(touch ? 'data-src-m' : 'data-src-loop'); video.loop = true; video.autoplay = true; video.play().catch(function(){}); }
   }
   var dur = function(){ return video && isFinite(video.duration) && video.duration > 0 ? video.duration : 0; };
   function scrubTick(){
